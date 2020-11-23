@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <title>MovieTiket.xyz</title>
+</head>
+
+<body>
+    <p>This is the Index Page.</p>
+    <div>
+        <button onclick="getLocations('http://localhost:8081/v1/location')">
+        Get Locations
+      </button>
+    </div>
+</body>
+<script>
+    const fetchData = async(url) => {
+        const respStream = await fetch(url);
+        try {
+            const response = await respStream.json();
+            //below return statement implicitly get converted to Promise.resolve(response)
+            return response;
+        } catch (error) {
+            console.log(
+                "error occured in fetching response from third party server",
+                error
+            );
+        }
+    };
+
+    let getLocations = (url) => {
+        (async() => {
+            let locsObj = await fetchData(url);
+            let locationsArray = locsObj.locations;
+            let cityList = locationsArray.forEach((obj) => {
+                console.log(obj.city);
+            });
+        })();
+    };
+</script>
+
+</html>

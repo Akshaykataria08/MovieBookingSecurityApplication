@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>Register</title>
+</head>
+
+<body>
+	<div id="login-signup">
+		<div id="register-div" style="display: none; float:left;">
+			Email: <input type="email" id="register-email"> <br>
+			Phone Number: <input type="number" id="register-phoneNumber">
+			<br> Password: <input type="password" id="register-password">
+			<button onclick="register()">submit</button>
+			<span id="register-response"></span>
+		</div>
+		<div id="login-div" style="display: block; float:right;">
+			Email: <input type="email" id="login-email"> <br>
+			Password: <input type="password" id="login-password">
+			<button onclick="login()">submit</button>
+		</div>
+	</div>
+	<section id="main">
+		<div id="home-page" style="display: none;">You are logged in</div>
+	</section>
+	<script type="text/javascript">
+		
+		function register() {
+			var registerEmail = document.getElementById("register-email").value;
+			var registerPhone = document.getElementById("register-phoneNumber").value;
+			var registerPassword = document.getElementById("register-password").value;
+
+			var user = {
+				"email" : registerEmail,
+				"phoneNumber" : registerPhone,
+				"password" : registerPassword
+			};
+
+			const xhttp = new XMLHttpRequest();
+			xhttp.open("POST", "http://localhost:9090/v1/register", true);
+			xhttp.setRequestHeader("Content-type", "application/json");
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState === 4 && xhttp.status === 200) {
+					// Print received data from server 
+					var registerResponseDiv = document.getElementById("register-response");
+					registerResponseDiv.innerHTML = "You are successfully Registered"
+				}
+			};
+			xhttp.send(JSON.stringify(user));
+		}
+
+		function login() {
+			var loginEmail = document.getElementById("login-email").value;
+			var loginPassword = document.getElementById("login-password").value;
+
+			var cred = {
+				"email" : loginEmail,
+				"password" : loginPassword
+			}
+			const xhttp = new XMLHttpRequest();
+			xhttp.open("POST", "http://localhost:9090/v1/login", true);
+			xhttp.setRequestHeader("Content-type", "application/json");
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState === 4 && xhttp.status === 200) {
+					// Print received data from server 
+					var homeDiv = document.getElementById("home-page");
+					var loginDiv = document.getElementById("login-div");
+
+					// loginDiv.style.display = "none";
+					homeDiv.style.display = "block";
+				}
+			};
+			xhttp.send(JSON.stringify(cred));
+		}
+	</script>
+</body>
+</html>
