@@ -5,6 +5,8 @@ import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -21,6 +23,9 @@ public class ClientAccessTokenServiceImpl implements ClientAccessTokenService{
 
 	@Value("${aws.cognito.auth-domain}")
 	private String authDomain;
+	
+	@Value("${application-scopes}")
+	private String applicationScopes;
 	
 	@Autowired
 	private CognitoConfig cognitoConfig;
@@ -48,11 +53,11 @@ public class ClientAccessTokenServiceImpl implements ClientAccessTokenService{
 				.uri(uriBuilder -> uriBuilder
 						.queryParam("grant_type", "client_credentials")
 						.queryParam("client_id", cognitoConfig.getClientId())
-						.queryParam("scope", "apiauthidentifier/application.write apiauthidentifier/application.read")
+						.queryParam("scope", applicationScopes)
 						.build()
 						)
 				.header(JwtConstants.AUTHORIZATION_HEADER, JwtConstants.BASIC_TOKEN_TYPE + getAuthorizationHeader())
-				.header("Content-Type", "application/x-www-form-urlencoded")
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 				.retrieve()
 				.bodyToMono(ClientAccessToken.class)
 				.block()

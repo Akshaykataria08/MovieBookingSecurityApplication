@@ -1,18 +1,23 @@
 package com.moviebooking.webapp.service;
 
-import com.amazonaws.services.cognitoidp.model.UsernameExistsException;
+import org.springframework.http.ResponseEntity;
+
 import com.moviebooking.webapp.domain.LoggedInUser;
-import com.moviebooking.webapp.domain.LoginRequest;
-import com.moviebooking.webapp.domain.RegisterationRequest;
-import com.moviebooking.webapp.domain.UserChangePasswordRequest;
-import com.moviebooking.webapp.domain.UserForgotPasswordRequest;
-import com.moviebooking.webapp.domain.UserResetPasswordRequest;
+import com.moviebooking.webapp.requestdto.UserAuthCredentials;
+import com.moviebooking.webapp.requestdto.UserChangePasswordRequest;
+import com.moviebooking.webapp.requestdto.UserForgotPasswordRequest;
+import com.moviebooking.webapp.requestdto.UserProfileRegistrationRequest;
+import com.moviebooking.webapp.requestdto.UserResetPasswordRequest;
+import com.moviebooking.webapp.responsedto.Response;
+
+import reactor.core.publisher.Mono;
 
 public interface CognitoService {
 
-	public String registerUser(RegisterationRequest user) throws UsernameExistsException;
+	public Mono<ResponseEntity<? extends Response>> registerUser(UserAuthCredentials userAuthCredentials,
+			UserProfileRegistrationRequest userProfileRegistrationRequest);
 
-	public LoggedInUser loginUser(LoginRequest loginRequest);
+	public Mono<LoggedInUser> loginUser(UserAuthCredentials loginRequest);
 
 	public String refreshUserSession(String id, String idToken) throws Exception;
 
@@ -23,5 +28,4 @@ public interface CognitoService {
 	public Boolean changePassword(UserChangePasswordRequest changePasswordRequest);
 
 	public Boolean logout();
-
 }

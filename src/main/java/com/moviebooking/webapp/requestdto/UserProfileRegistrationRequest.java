@@ -1,6 +1,5 @@
-package com.moviebooking.webapp.domain;
+package com.moviebooking.webapp.requestdto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,10 +7,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class RegisterationRequest {
+public class UserProfileRegistrationRequest {
 
 	private String email;
+	private String dob;
 	private String phoneNumber;
-	private String password;
+	private String firstName;
+	private String lastName;
 }

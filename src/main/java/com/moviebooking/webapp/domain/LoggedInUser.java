@@ -1,5 +1,7 @@
 package com.moviebooking.webapp.domain;
 
+import com.moviebooking.webapp.responsedto.UserProfileResponse;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoggedInUser {
 
-	private String email;
-	private String phoneNumber;
+	private UserProfileResponse userProfileResponse;
 	private String idToken;
 }

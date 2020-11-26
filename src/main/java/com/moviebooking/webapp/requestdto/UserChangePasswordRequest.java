@@ -1,4 +1,4 @@
-package com.moviebooking.webapp.domain;
+package com.moviebooking.webapp.requestdto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

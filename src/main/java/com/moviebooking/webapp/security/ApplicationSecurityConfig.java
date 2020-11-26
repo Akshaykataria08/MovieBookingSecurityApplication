@@ -43,7 +43,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.PUT, "/v1/theatre/**").hasRole("ADMIN")
 			.antMatchers(HttpMethod.DELETE, "/v1/theatre/**").hasRole("ADMIN")
 			
-			.antMatchers("/v1/booking/**", "/v1/changePassword", "/v1/logout").authenticated()
+			.antMatchers("/v1/profile/**", "/v1/booking/**", "/v1/changePassword", "/v1/logout").authenticated()
 			
 			.anyRequest().permitAll()
 			.and()
